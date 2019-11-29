@@ -30,6 +30,7 @@ class BeesBlogRecentPosts extends Module
 {
     /**
      * BeesBlogRecentPosts constructor.
+     * @throws PrestaShopException
      */
     public function __construct()
     {
@@ -52,18 +53,19 @@ class BeesBlogRecentPosts extends Module
     /**
      * @return bool
      *
+     * @throws Adapter_Exception
+     * @throws PrestaShopDatabaseException
+     * @throws PrestaShopException
      * @since 1.0.0
      */
     public function install()
     {
-        if (!parent::install()) {
-            return false;
-        }
-
-        $this->registerHook('displayLeftColumn');
-        $this->registerHook('displayHome');
-
-        return true;
+        return (
+            parent::install() &&
+            $this->registerHook('displayLeftColumn') &&
+            $this->registerHook('displayHome') &&
+            $this->registerHook('displayFooterProduct')
+        );
     }
 
     /**
@@ -71,6 +73,8 @@ class BeesBlogRecentPosts extends Module
      *
      * @return string
      *
+     * @throws PrestaShopException
+     * @throws SmartyException
      * @since 1.0.0
      */
     public function hookDisplayLeftColumn()
@@ -99,17 +103,22 @@ class BeesBlogRecentPosts extends Module
      *
      * @return string
      *
+     * @throws PrestaShopException
+     * @throws SmartyException
      * @since 1.0.0
      */
     public function hookDisplayRightColumn()
     {
         return $this->hookDisplayLeftColumn();
     }
+
     /**
      * Display in home page
      *
      * @return string
      *
+     * @throws PrestaShopException
+     * @throws SmartyException
      * @since 1.0.3
      */
     public function hookDisplayHome()
@@ -131,14 +140,18 @@ class BeesBlogRecentPosts extends Module
 
         return $this->display(__FILE__, 'views/templates/hooks/home.tpl');
     }
+
     /**
      * Display in product page
      *
+     * @param $params
      * @return string
      *
+     * @throws PrestaShopException
+     * @throws SmartyException
      * @since 1.0.3
      */
-    public function hookProductFooter($params)
+    public function hookDisplayFooterProduct()
     {
         if (!Module::isEnabled('beesblog')) {
             return '';
