@@ -36,7 +36,7 @@ class BeesBlogRecentPosts extends Module
     {
         $this->name = 'beesblogrecentposts';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'thirty bees';
 
         $this->bootstrap = true;
