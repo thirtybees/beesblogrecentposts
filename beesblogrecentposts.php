@@ -53,7 +53,6 @@ class BeesBlogRecentPosts extends Module
     /**
      * @return bool
      *
-     * @throws Adapter_Exception
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      * @since 1.0.0
@@ -83,15 +82,8 @@ class BeesBlogRecentPosts extends Module
             return '';
         }
 
-        $recentPosts = BeesBlogPost::getPosts($this->context->language->id, 0, 5);
-        if (is_array($recentPosts)) {
-            foreach ($recentPosts as &$recentPost) {
-                $recentPost->link = BeesBlog::GetBeesBlogLink('beesblog_post', ['blog_rewrite' => $recentPost->link_rewrite]);
-            }
-        }
-
         $this->context->smarty->assign([
-            'beesblogRecentPostsPosts' => $recentPosts,
+            'beesblogRecentPostsPosts' => BeesBlogPost::getPosts($this->context->language->id, 0, 5),
             'beesblogRecentPostsBlogUrl' => BeesBlog::getBeesBlogLink(),
         ]);
 
@@ -127,14 +119,8 @@ class BeesBlogRecentPosts extends Module
             return '';
         }
 
-        $recentPosts = BeesBlogPost::getPosts($this->context->language->id, 0, 4);
-        if (is_array($recentPosts)) {
-            foreach ($recentPosts as &$recentPost) {
-                $recentPost->link = BeesBlog::GetBeesBlogLink('beesblog_post', ['blog_rewrite' => $recentPost->link_rewrite]);
-            }
-        }
         $this->context->smarty->assign([
-            'beesblogRecentPostsPosts' => $recentPosts,
+            'beesblogRecentPostsPosts' => BeesBlogPost::getPosts($this->context->language->id, 0, 4),
             'beesblogRecentPostsBlogUrl' => BeesBlog::getBeesBlogLink(),
         ]);
 
@@ -144,7 +130,6 @@ class BeesBlogRecentPosts extends Module
     /**
      * Display in product page
      *
-     * @param $params
      * @return string
      *
      * @throws PrestaShopException
@@ -157,14 +142,8 @@ class BeesBlogRecentPosts extends Module
             return '';
         }
 
-        $recentPosts = BeesBlogPost::getPosts($this->context->language->id, 0, 4);
-        if (is_array($recentPosts)) {
-            foreach ($recentPosts as &$recentPost) {
-                $recentPost->link = BeesBlog::GetBeesBlogLink('beesblog_post', ['blog_rewrite' => $recentPost->link_rewrite]);
-            }
-        }
         $this->context->smarty->assign([
-            'beesblogRecentPostsPosts' => $recentPosts,
+            'beesblogRecentPostsPosts' => BeesBlogPost::getPosts($this->context->language->id, 0, 4),
             'beesblogRecentPostsBlogUrl' => BeesBlog::getBeesBlogLink(),
         ]);
 
